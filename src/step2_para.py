@@ -131,7 +131,7 @@ def listen(args):
                 df_E=df_E.append(df_newline,ignore_index=True)
                 df_E.to_csv(auto_csv,index=False)
     
-    init_params_csv=os.path.join(auto_dir, 'step2_twist_init_params.csv')
+    init_params_csv=os.path.join(auto_dir, 'step2_para_init_params.csv')
     df_init_params = pd.read_csv(init_params_csv)
     df_init_params_done = filter_df(df_init_params,{'status':'Done'})
     isOver = True if len(df_init_params_done)==len(df_init_params) else False
