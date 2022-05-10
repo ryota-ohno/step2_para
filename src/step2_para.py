@@ -113,7 +113,7 @@ def listen(args):
             continue
         else:
             len_queue-=1;machine_type_list.remove(machine_type)
-            Et1=float(E_list[2]);Et2=float(E_list[2]);Et3=float(E_list[3]);Et4=float(E_list[4]);Ep1=float(E_list[0]);Ep2=float(E_list[0])
+            Et1=float(E_list[1]);Et2=float(E_list[2]);Et3=float(E_list[3]);Et4=float(E_list[4]);Ep1=float(E_list[0]);Ep2=float(E_list[0])
             E = (Et1+Et2+Et3+Et4)+(Ep1+Ep2)
             df_E.loc[idx, ['E_t1','E_t2','E_t3','E_t4','E_p1','E_p2','E','status']] = [Et1,Et2,Et3,Et4,Ep1,Ep2,E,'Done']
             df_E.to_csv(auto_csv,index=False)
