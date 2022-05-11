@@ -101,7 +101,7 @@ def listen(args):
     df_queue = df_E.loc[df_E['status']=='InProgress',['machine_type','file_name']]
     machine_type_list = df_queue['machine_type'].values.tolist()
     len_queue = len(df_queue)
-    maxnum_machine2 = 0#num_nodes/2 if num_nodes%2==0 else (num_nodes+1)/2
+    maxnum_machine2 = 1#num_nodes/2 if num_nodes%2==0 else (num_nodes+1)/2
     
     for idx,row in zip(df_queue.index,df_queue.values):
         machine_type,file_name = row
@@ -201,7 +201,7 @@ def get_opt_params_dict(df_cur, init_params_dict,fixed_params_dict):
     b_init_prev = init_params_dict['b']; a_init_prev = init_params_dict['a']
     A1 = init_params_dict['A1']; A2 = init_params_dict['A2']
     A4 = init_params_dict['A4']; theta = init_params_dict['theta'];phi = init_params_dict['phi']
-    R3 = init_params_dict['R3']; R4_init_prev = init_params_dict['R4']
+    R3 = init_params_dict['R3']; R4 = init_params_dict['R4']
 
     while True:
         E_list=[];heri_list=[]
