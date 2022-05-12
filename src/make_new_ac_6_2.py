@@ -68,6 +68,68 @@ def get_monomer_xyzR(monomer_name,Ta,Tb,Tc,A1,A2,A3,phi=0.0,isFF=False):
     
     else:
         raise RuntimeError('invalid monomer_name={}'.format(monomer_name))
+
+def get_monomer_xyzR_(monomer_name,Ta,Tb,Tc,A1,A2,A3,phi=0.0,isFF=False):
+    T_vec = np.array([Ta,Tb,Tc])
+    df_mono=pd.read_csv('~/Working/step2_para/{}/assets/monomer_4.csv'.format(monomer_name))
+    atoms_array_xyzR=df_mono[['X','Y','Z','R']].values
+    
+    ex = np.array([1.,0.,0.]); ey = np.array([0.,1.,0.]); ez = np.array([0.,0.,1.])
+
+    xyz_array = atoms_array_xyzR[:,:3]
+    xyz_array = np.matmul(xyz_array,Rod(ez,A3).T)
+    xyz_array = np.matmul(xyz_array,Rod(-ex,A2).T)
+    xyz_array = np.matmul(xyz_array,Rod(ey,A1).T)
+    xyz_array = xyz_array + T_vec
+    R_array = atoms_array_xyzR[:,3].reshape((-1,1))
+    
+    if monomer_name in MONOMER_LIST:
+        return np.concatenate([xyz_array,R_array],axis=1)
+    
+    elif monomer_name=='mono-C9-BTBT':
+        #alkylの基準
+        C0_index = 13 #BTBT骨格の端
+        C1_index = 23 #アルキルの根本
+        
+        C0=xyz_array[C0_index]
+        C1=xyz_array[C1_index]
+        
+        #phi1に関するalkylの軸
+        n1=C1-C0
+        n1/=np.linalg.norm(n1)
+        
+        #alkyl回転・分子1作成
+        xyz_array[C1_index:] = np.matmul((xyz_array[C1_index:]-C0),Rod(n1,phi).T) + C0
+        
+        if isFF:
+            FFconfig_array=df_mono[['q','sig','eps']].values
+            return np.concatenate([xyz_array,R_array,FFconfig_array],axis=1)
+        else:
+            return np.concatenate([xyz_array,R_array],axis=1)
+    
+    elif monomer_name=='mono-C4-BTBT':
+        #alkylの基準
+        C0_index = 13 #BTBT骨格の端
+        C1_index = 23 #アルキルの根本
+        
+        C0=xyz_array[C0_index]
+        C1=xyz_array[C1_index]
+        
+        #phi1に関するalkylの軸
+        n1=C1-C0
+        n1/=np.linalg.norm(n1)
+        
+        #alkyl回転・分子1作成
+        xyz_array[C1_index:] = np.matmul((xyz_array[C1_index:]-C0),Rod(n1,phi).T) + C0
+        
+        if isFF:
+            FFconfig_array=df_mono[['q','sig','eps']].values
+            return np.concatenate([xyz_array,R_array,FFconfig_array],axis=1)
+        else:
+            return np.concatenate([xyz_array,R_array],axis=1)
+    
+    else:
+        raise RuntimeError('invalid monomer_name={}'.format(monomer_name))
         
 def get_xyzR_lines(xyzR_array,machine_type,file_description):
     if machine_type==1:
@@ -198,10 +260,10 @@ def make_gjf_xyz(auto_dir,monomer_name,params_dict,machine_type,isInterlayer):
         monomer_array_ip2 = get_monomer_xyzR(monomer_name,c[0]-a_,c[1],c[2],A1,A2,A3, phi1)
     monomer_array_p2 = get_monomer_xyzR(monomer_name,0,b_,R4,-A4,A2,-A3, phi2)
     monomer_array_i0 = get_monomer_xyzR(monomer_name,c[0],c[1],c[2],A4,A2,A3, phi1)
-    monomer_array_t1 = get_monomer_xyzR(monomer_name,a_/2,b_/2,R3,-A4,A2,-A3, phi2)
-    monomer_array_t2 = get_monomer_xyzR(monomer_name,a_/2,-b_/2,R3-R4,-A4,A2,-A3, phi2)
-    monomer_array_t3 = get_monomer_xyzR(monomer_name,-a_/2,-b_/2,-R3,-A4,A2,-A3, phi2)
-    monomer_array_t4 = get_monomer_xyzR(monomer_name,-a_/2,b_/2,-R3+R4,-A4,A2,-A3, phi2)
+    monomer_array_t1 = get_monomer_xyzR_(monomer_name,a_/2,b_/2,R3,-A4,A2,-A3, phi2)
+    monomer_array_t2 = get_monomer_xyzR_(monomer_name,a_/2,-b_/2,R3-R4,-A4,A2,-A3, phi2)
+    monomer_array_t3 = get_monomer_xyzR_(monomer_name,-a_/2,-b_/2,-R3,-A4,A2,-A3, phi2)
+    monomer_array_t4 = get_monomer_xyzR_(monomer_name,-a_/2,b_/2,-R3+R4,-A4,A2,-A3, phi2)
     monomer_array_it1 = get_monomer_xyzR(monomer_name,c[0]+a_/2,c[1]+b_/2,c[2],-A4,A2,-A3, phi2)
     monomer_array_it2 = get_monomer_xyzR(monomer_name,c[0]+a_/2,c[1]-b_/2,c[2],-A4,A2,-A3, phi2)
     monomer_array_it3 = get_monomer_xyzR(monomer_name,c[0]-a_/2,c[1]-b_/2,c[2],-A4,A2,-A3, phi2)
