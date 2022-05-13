@@ -199,7 +199,7 @@ def get_params_dict(auto_dir, num_nodes, fixed_param_keys, opt_param_keys):
 def get_opt_params_dict(df_cur, init_params_dict,fixed_params_dict):
     df_val = filter_df(df_cur, fixed_params_dict)
     b_init_prev = init_params_dict['b']; a_init_prev = init_params_dict['a']
-    theta = init_params_dict['theta'];phi = init_params_dict['phi']
+    theta = init_params_dict['theta']
     R3 = init_params_dict['R3']; R4 = init_params_dict['R4']
 
     while True:
@@ -210,7 +210,7 @@ def get_opt_params_dict(df_cur, init_params_dict,fixed_params_dict):
                 R3 = np.round(R3,1);R4 = np.round(R4,1)
                 df_val_ab = df_val[
                     (df_val['a']==a)&(df_val['b']==b)&(df_val['theta']==theta)&
-                    (df_val['R3']==R3)&(df_val['R4']==R4)&(df_val['phi']==phi)&
+                    (df_val['R3']==R3)&(df_val['R4']==R4)&
                     (df_val['status']=='Done')
                                   ]
                 if len(df_val_ab)==0:
