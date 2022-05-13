@@ -109,7 +109,7 @@ def listen(args):
         if not(os.path.exists(log_filepath)):#logファイルが生成される直前だとまずいので
             continue
         E_list=get_E0(log_filepath)
-        if len(E_list)!=5:
+        if len(E_list)!=3:
             continue
         else:
             len_queue-=1;machine_type_list.remove(machine_type)
