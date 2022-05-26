@@ -13,7 +13,7 @@ os.environ['HOME'] ='/home/ohno'
 INTERACTION_PATH = os.path.join(os.environ['HOME'],'Working/interaction/')
 sys.path.append(INTERACTION_PATH)
 
-from make_new_ac_6_1 import exec_gjf
+from make_acene import exec_gjf
 from vdw import vdw_R
 from utils import get_E0
 
