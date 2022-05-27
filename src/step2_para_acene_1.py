@@ -221,7 +221,7 @@ def get_opt_params_dict(df_cur, init_params_dict,fixed_params_dict):
         if  a_init==a_init_prev and b_init==b_init_prev :
             return True,{'a':a_init,'b':b_init}
         else:
-            a_init_prev=b_init
+            a_init_prev=a_init
             b_init_prev=b_init
 
 def get_values_from_df(df,index,key):
