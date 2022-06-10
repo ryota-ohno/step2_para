@@ -93,8 +93,8 @@ def listen(args):
     monomer_name = args.monomer_name
     num_nodes = args.num_nodes
     isTest = args.isTest
-    opt_param_keys = ['a','b']
-    fixed_param_keys = ['R3','R4','theta',]#'A1','A2','A4']
+    opt_param_keys = ['R3','R4']
+    fixed_param_keys = ['a','b','theta',]#'A1','A2','A4']
 
     auto_csv = os.path.join(auto_dir,'step2_para.csv')
     df_E = pd.read_csv(auto_csv)
