@@ -215,7 +215,7 @@ def get_opt_params_dict(df_cur, init_params_dict,fixed_params_dict):
                                   ]
                 if len(df_val_ab)==0:
                     return False,{'R3':R3,'R4':R4}
-                heri_list.append([a,b]);E_list.append(df_val_ab['E'].values[0])
+                heri_list.append([R3,R4]);E_list.append(df_val_ab['E'].values[0])
         R3_init,R4_init = heri_list[np.argmin(np.array(E_list))]
         if  R3_init==R3_init_prev and R4_init==R4_init_prev :
             return True,{'R3':R3_init,'R4':R4_init}
