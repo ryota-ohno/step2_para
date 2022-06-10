@@ -205,7 +205,7 @@ def get_opt_params_dict(df_cur, init_params_dict,fixed_params_dict):
     while True:
         E_list=[];heri_list=[]
         for R3 in [R3_init_prev-0.1,R3_init_prev,R3_init_prev+0.1]:
-            for b in [R4_init_prev-0.1,R4_init_prev,R4_init_prev+0.1]:
+            for R4 in [R4_init_prev-0.1,R4_init_prev,R4_init_prev+0.1]:
                 b = np.round(b,1);a = np.round(a,1)
                 R3 = np.round(R3,1);R4 = np.round(R4,1)
                 df_val_ab = df_val[
